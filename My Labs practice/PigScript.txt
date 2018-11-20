@@ -1,0 +1,3 @@
+A = LOAD '/Stocks' USING PigStorage(',');
+B = FOREACH A GENERATE $1, $3, $6;
+STORE B INTO '/OP8' USING PigStorage(',');

@@ -1,0 +1,9 @@
+$ wget https://archive.cloudera.com/cm5/installer/latest/cloudera-manager-installer.bin
+
+
+
+$ sudo chmod 777 cloudera-manager-installer.bin
+
+
+
+$ sudo ./cloudera-manager-installer.bin

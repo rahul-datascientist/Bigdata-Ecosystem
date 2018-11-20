@@ -1,0 +1,73 @@
+ordersRDD = sc.textFile("file:///home/cloudera/Desktop/Labs/orders")
+
+>>> ordersRDD.first()
+
+>>> type(ordersRDD.first()) -- Unicode is string
+
+>>> for i in ordersRDD.take(10): print(i)
+
+>>> s = ordersRDD.first()
+
+>>> s[0]
+
+>>> s[:10]
+
+>>> len(s)
+
+#One way to get the date
+>>> s[2:12]
+
+#split and extract date
+>>> s.split(",")
+
+>>> type(s.split(","))
+
+#Get Date
+>>> s.split(",")[1]
+
+#Get customer id
+>>> s.split(",")[2]
+
+#type casting to integer
+>>> int(s.split(",")[0])
+
+# Convert YYYY-MM-DD into YYYYMMDD and also convert into integer
+
+>>> int(s.split(",")[1].split(" ")[0].replace("-", ""))
+
+# Using the above logic as a lambda func for map (To transform the entire dataset)
+
+>>> orders.map(lambda s: int(s.split(",")[1].split(" ")[0].replace("-", ""))).take(10)
+
+
+-----------------------------------------------------------
+# Get the count by order_status
+
+>>> orders.map(lambda o: (o.split(",")[3], 1)) \
+    .reduceByKey(lambda s, i : s+i).collect()
+-----------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------
+# Filter out records with order_status = COMPLETE
+
+>>> ordersComplete = orders.filter(lambda o: o.split(",")[3] == "COMPLETE")
+
+>>> ordersComplete.count()
+
+>>> for i in ordersComplete.take(100): print(i)
+-----------------------------------------------------------
+
+-----------------------------------------------------------
+# Filter out records with order_status = COMPLETE and CLOSED
+
+
+>>> ordersComplete = orders.filter(lambda o: \
+    o.split(",")[3] == "COMPLETE" or o.split(",")[3] == "CLOSED")
+
+>>> ordersComplete.count()
+
+>>> for i in ordersComplete.take(100): print(i)
+-----------------------------------------------------------

@@ -1,0 +1,39 @@
+### CREATE EXTERNAL TABLE ###
+
+hive> CREATE external TABLE stocks (
+
+exch STRING,
+
+symbol STRING,
+
+ymd STRING,
+
+price_open FLOAT,
+
+price_high FLOAT,
+
+price_low FLOAT,
+
+price_close FLOAT,
+
+volume INT,
+
+price_adj_close FLOAT)
+
+ROW FORMAT DELIMITED 
+
+FIELDS TERMINATED BY ','
+
+LOCATION '/Stocks';
+
+
+
+### SELECT 100 RECORDS ###
+
+hive> SELECT * FROM stocks LIMIT 100;
+
+
+
+### CALCULATE MAX CLOSING PRICE ###
+
+hive> SELECT symbol, max(price_close) max_close FROM stocks GROUP BY symbol;

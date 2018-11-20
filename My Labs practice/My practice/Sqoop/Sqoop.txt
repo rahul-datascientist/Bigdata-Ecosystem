@@ -1,0 +1,51 @@
+Terminal 1 - MySQL
+
+$ mysql -u root -p
+
+mysql> show databases;
+
+mysql> use retail_db;
+
+mysql> show tables;
+
+mysql> describe categories;
+
+mysql> select * from categories;
+
+Terminal 2 - Sqoop
+
+$ sqoop version
+
+$ sqoop list-databases --connect jdbc:mysql://localhost:3306 --username root -P 
+
+$ sqoop list-tables --connect jdbc:mysql://localhost:3306/retail_db --username root -P
+
+$ sqoop import --connect jdbc:mysql://localhost:3306/retail_db --username root -P --table categories --target-dir /categories -m 1
+
+$ sqoop import --connect jdbc:mysql://localhost:3306/retail_db --username root -P --table orders --target-dir /orders -m 1
+
+$ sqoop import --connect jdbc:mysql://localhost:3306/retail_db --username root -P --table order_items --target-dir /order_items -m 1
+
+$ sqoop import --connect jdbc:mysql://localhost:3306/retail_db --username root -P --table customers --target-dir /customers -m 1
+
+Sqoop Export
+
+Terminal 1 - MySQL
+$ mysql -u root -p
+
+mysql> create database sample;
+
+mysql> show databases;
+
+mysql> use sample;
+
+mysql>  CREATE TABLE categories_new(category_id int(11) PRIMARY KEY, category_dept_id int(11), category_name varchar(50));
+
+mysql> select * from categories_new;
+
+Terminal 2 - Sqoop
+$ sqoop export --connect jdbc:mysql://localhost:3306/sample --username root --P --table categories_new --export-dir /categories_import_p
+
+Terminal 1 - MySQL
+mysql> select * from categories_new;
+

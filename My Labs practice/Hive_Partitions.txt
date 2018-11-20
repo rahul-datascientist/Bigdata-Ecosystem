@@ -1,0 +1,26 @@
+-- create table for handling transactions
+
+create table txnrecords(txnno INT, txndate STRING, custno INT, amount DOUBLE, category STRING, product STRING, city STRING, state STRING, spendby STRING) row format delimited fields terminated by ',';
+
+-- load data into table
+
+load data local inpath '/home/cloudera/Desktop/Labs/txns.txt' into table txnrecords;
+
+-- Configure hive for partitions
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.dynamic.partition=true;
+
+-- Create partitioned table
+
+create table txnrecsByCat(txnno INT, txndate STRING, custno INT, amount DOUBLE,
+product STRING, city STRING, state STRING, spendby STRING)
+partitioned by (category STRING)
+row format delimited
+fields terminated by ',';
+
+-- Load data into partition table
+
+from txnrecords txn INSERT OVERWRITE TABLE txnrecsByCat PARTITION(category)
+select txn.txnno, txn.txndate,txn.custno, txn.amount,txn.product,txn.city,txn.state,
+txn.spendby, txn.category DISTRIBUTE BY category;

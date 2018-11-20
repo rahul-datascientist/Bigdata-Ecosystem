@@ -1,0 +1,17 @@
+val ordersRDD = sc.textFile("file:///home/cloudera/Desktop/Labs/orders")
+
+val ordersDF = ordersRDD.map(order => {
+  (order.split(",")(0).toInt, order.split(",")(1), order.split(",")(2).toInt, order.split(",")(3))
+}).toDF()
+
+ordersDF.show()
+
+val ordersDF = ordersRDD.map(order => {
+  (order.split(",")(0).toInt, order.split(",")(1), order.split(",")(2).toInt, order.split(",")(3))
+}).toDF("order_id", "order_date", "order_customer_id", "order_status")
+
+ordersDF.show()
+
+ordersDF.registerTempTable("orders")
+
+sqlContext.sql("select count(*) from orders").show()

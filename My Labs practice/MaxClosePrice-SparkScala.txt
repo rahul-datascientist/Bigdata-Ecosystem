@@ -1,0 +1,6 @@
+-- Max close price /stock
+val stocksRDD = sc.textFile("/Stocks")
+val splitsRDD = stocksRDD.map(record => record.split(","))
+val symcloseRDD = splitsRDD.map(arr => (arr(1), arr(6).toFloat))
+val maxcloseRDD = symcloseRDD.reduceByKey((a, b) => Math.max(a, b))
+maxcloseRDD.collect()

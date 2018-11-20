@@ -1,0 +1,51 @@
+------------------------------------------------------
+WordCount program
+------------------------------------------------------
+
+------------------------------------------------------
+Launch the Spark Shell
+$ spark-shell
+------------------------------------------------------
+
+------------------------------------------------------
+Launch Browser to access Spark Application
+http://localhost:4040
+------------------------------------------------------
+
+------------------------------------------------------
+Scala WordCount
+
+val baseRDD = sc.textFile("/Sample")
+val fmapRDD = baseRDD.flatMap(line => line.split(" "))
+val mapRDD = fmapRDD.map(word => (word, 1))
+val countRDD = mapRDD.reduceByKey((sum, index) => sum+index)
+countRDD.collect()
+------------------------------------------------------
+
+------------------------------------------------------
+Scala WordCount
+
+val count = sc.textFile("/Sample").flatMap(l => l.split(" ")).map(w => (w, 1)).reduceByKey((s, i) => s+i)
+count.collect
+------------------------------------------------------
+------------------------------------------------------
+Exit the Spark Shell
+scala> :quit
+------------------------------------------------------
+
+------------------------------------------------------
+Launch the PySpark Shell
+$ pyspark
+------------------------------------------------------
+------------------------------------------------------
+Python WordCount
+
+baseRDD = sc.textFile("/Sample")
+fmapRDD = baseRDD.flatMap(lambda line : line.split(" "))
+mapRDD = fmapRDD.map(lambda word : (word, 1))
+countRDD = mapRDD.reduceByKey(lambda sum, index : sum+index)
+countRDD.collect()
+------------------------------------------------------
+
+
+

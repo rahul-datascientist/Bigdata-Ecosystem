@@ -1,0 +1,47 @@
+create external table orders (
+  order_id int,
+  order_date string,
+  order_customer_id int,
+  order_status string) 
+  row format delimited 
+  fields terminated by ','
+  location '/orders';
+
+create external table order_items (
+  order_item_id int,
+  order_item_order_id int,
+  order_item_product_id int,
+  order_item_quantity int,
+  order_item_subtotal float,
+  order_item_product_price float) 
+  row format delimited 
+  fields terminated by ','
+  location '/order_items';
+
+create external table customers (
+  customer_id int,
+  customer_fname string,
+  customer_lname string,
+  customer_email string,
+  customer_password string,
+  customer_street string,
+  customer_city string,
+  customer_state string,
+  customer_zipcode string)
+  row format delimited 
+  fields terminated by ','
+  location '/customers';
+
+select o.*, c.* from customers c left outer join orders o
+on o.order_customer_id = c.customer_id
+limit 10;
+
+select count(1) from orders o inner join customers c
+on o.order_customer_id = c.customer_id;
+
+select count(1) from customers c left outer join orders o
+on o.order_customer_id = c.customer_id;
+
+select c.* from customers c left outer join orders o
+on o.order_customer_id = c.customer_id
+where o.order_customer_id is null;

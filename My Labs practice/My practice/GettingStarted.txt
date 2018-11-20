@@ -1,0 +1,84 @@
+------------------------------------------------------------------
+Start and Stop Hadoop Services
+------------------------------------------------------------------
+
+To start HDFS daemons
+$ sudo service hadoop-hdfs-namenode start
+$ sudo service hadoop-hdfs-datanode start
+$ sudo service hadoop-hdfs-secondarynamenode start
+
+To stop HDFS daemons
+$ sudo service hadoop-hdfs-namenode stop
+$ sudo service hadoop-hdfs-datanode stop
+$ sudo service hadoop-hdfs-secondarynamenode stop
+
+To start YARN daemons
+$ sudo service hadoop-yarn-resourcemanager start
+$ sudo service hadoop-yarn-nodemanager start
+
+To stop YARN daemons
+$ sudo service hadoop-yarn-resourcemanager stop
+$ sudo service hadoop-yarn-nodemanager stop
+
+$ sudo jps
+
+------------------------------------------------------------------
+FsShell Commands
+------------------------------------------------------------------
+
+$ hadoop fs -ls /
+
+$ hadoop fs -mkdir /Sample
+
+$ hdfs dfs -ls /
+
+$ hadoop fs -put /home/cloudera/Desktop/Labs/SampleFile.txt /Sample/
+
+$ hadoop fs -cat /Sample/SampleFile.txt
+
+$ hadoop fs -mkdir /Sample1
+
+$ hadoop fs -cp /Sample/SampleFile.txt /Sample1/
+
+# Run the same command again - Error
+$ hadoop fs -cp /Sample/SampleFile.txt /Sample1/ 
+
+$ hadoop fs -cp /Sample/SampleFile.txt /Sample1/SampleFile1.txt 
+
+$ hadoop fs -mv /Sample1/SampleFile.txt /Sample1/SampleFile2.txt
+
+$ hadoop fs -rm /Sample/SampleFile.txt
+
+$ hadoop fs -rm -r /Sample1
+
+$ hadoop fs -copyFromLocal /home/cloudera/Desktop/Labs/SampleFile.txt /Sample/
+
+$ hadoop fs -mkdir /Stocks
+
+$ hadoop fs -put /home/cloudera/Desktop/Labs/NYSE_daily_prices_Q.csv /Stocks/
+
+$ hadoop fs -appendToFile Desktop/Labs/SampleFile.txt /Sample/SampleFile.txt
+
+------------------------------------------------------------------
+MapReduce Job Execution
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+WordCount:
+
+$ yarn jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /Sample /OP1
+
+$ hadoop fs -cat /OP1/part-r-00000
+
+$ sudo watch 'jps | sort -k 2'
+------------------------------------------------------------------
+
+------------------------------------------------------------------
+MaxClosePrice:
+
+$ hadoop jar /home/cloudera/Desktop/Labs/mcp.jar MaxClosePrice /Stocks /OP2
+
+Check the Output:
+
+$ hadoop fs -cat /OP2/part-r-00000
+------------------------------------------------------------------

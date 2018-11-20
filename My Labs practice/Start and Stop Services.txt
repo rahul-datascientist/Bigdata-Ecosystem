@@ -1,0 +1,17 @@
+To start HDFS daemons
+$ sudo service hadoop-hdfs-namenode start
+$ sudo service hadoop-hdfs-datanode start
+$ sudo service hadoop-hdfs-secondarynamenode start
+
+To stop HDFS daemons
+$ sudo service hadoop-hdfs-namenode stop
+$ sudo service hadoop-hdfs-datanode stop
+$ sudo service hadoop-hdfs-secondarynamenode stop
+
+To start YARN daemons
+$ sudo service hadoop-yarn-resourcemanager start
+$ sudo service hadoop-yarn-nodemanager start
+
+To stop YARN daemons
+$ sudo service hadoop-yarn-resourcemanager stop
+$ sudo service hadoop-yarn-nodemanager stop

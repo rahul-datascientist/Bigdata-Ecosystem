@@ -1,0 +1,15 @@
+WordCount using Hive
+
+hive> 
+create external table table1(
+col1 string) 
+row format delimited 
+fields terminated by '\n' 
+location '/Sample';
+
+
+
+hive> 
+select word, count(*) from table1 
+LATERAL VIEW explode(split(col1, ' ')) ltable as word 
+GROUP BY word;

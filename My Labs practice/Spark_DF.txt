@@ -1,0 +1,16 @@
+
+from pyspark.sql import Row
+
+categoriesRDD = sc.textFile("/categories")
+
+categoriesDF = categoriesRDD.map(lambda o: Row(int(o.split(",")[0]), int(o.split(",")[1]), o.split(",")[2])).toDF()
+
+categoriesDF.show()
+
+categoriesDF = categoriesRDD.map(lambda o: Row(category_id=int(o.split(",")[0]), category_dept_id=int(o.split(",")[1]), category_name=o.split(",")[2])).toDF()
+
+categoriesDF.show()
+
+categoriesDF.registerTempTable("categoriesDF_table")
+
+sqlContext.sql("select count(*) from categoriesDF_table").show()
